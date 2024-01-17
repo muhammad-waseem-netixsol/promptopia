@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
+const Form = ({ type, post, setPost, submitting, handleSubmit, propmtValidity, tagValidity }) => {
   return (
     <section className='w-full max-w-full flex-start flex-col'>
       <h1 className='head_text text-left'>
@@ -25,8 +25,9 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
             onChange={(e) => setPost({ ...post, prompt: e.target.value })}
             placeholder='Write your post here'
             required
-            className='form_textarea '
+            className={`form_textarea ${!propmtValidity && "border border-red-500"}`}
           />
+          {!propmtValidity && <p className="text-red-500 italic text-sm">Prompt is required!</p>}
         </label>
 
         <label>
@@ -42,10 +43,11 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
             type='text'
             placeholder='#Tag'
             required
-            className='form_input'
+            className={`form_input ${!tagValidity && "border border-red-500"}`}
           />
+             {!tagValidity && <p className="text-red-500 italic text-sm">Prompt is required!</p>}
         </label>
-
+      
         <div className='flex-end mx-3 mb-5 gap-4'>
           <Link href='/' className='text-gray-500 text-sm'>
             Cancel

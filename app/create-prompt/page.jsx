@@ -9,15 +9,25 @@ import Form from "@components/Form";
 const CreatePrompt = () => {
   const router = useRouter();
   const { data: session } = useSession();
-
+  const [propmptValid, setPromptValid] = useState(true);
+  const [tagIsValid, setTagIsValid] = useState(true);
   const [submitting, setIsSubmitting] = useState(false);
   const [post, setPost] = useState({ prompt: "", tag: "" });
 
   const createPrompt = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
+    if(post.prompt.trim() === ""){
+      setPromptValid(false);
+      return ;
+    }
+    if(post.tag.trim() === ""){
+      setTagIsValid(false);
+      return ;
+    }
     try {
+      setPromptValid(true);
+      setTagIsValid(true);
       const response = await fetch("/api/prompt/new", {
         method: "POST",
         body: JSON.stringify({
@@ -42,8 +52,10 @@ const CreatePrompt = () => {
       type='Create'
       post={post}
       setPost={setPost}
-      submitting={submitting}
+      submitting={tagIsValid && propmptValid}
       handleSubmit={createPrompt}
+      propmtValidity={propmptValid}
+      tagValidity={tagIsValid}
     />
   );
 };
