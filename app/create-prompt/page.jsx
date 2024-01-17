@@ -16,7 +16,7 @@ const CreatePrompt = () => {
 
   const createPrompt = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    
     if(post.prompt.trim() === ""){
       setPromptValid(false);
       return ;
@@ -26,6 +26,7 @@ const CreatePrompt = () => {
       return ;
     }
     try {
+      setIsSubmitting(true);
       setPromptValid(true);
       setTagIsValid(true);
       const response = await fetch("/api/prompt/new", {
@@ -52,7 +53,7 @@ const CreatePrompt = () => {
       type='Create'
       post={post}
       setPost={setPost}
-      submitting={tagIsValid && propmptValid}
+      submitting={submitting}
       handleSubmit={createPrompt}
       propmtValidity={propmptValid}
       tagValidity={tagIsValid}
